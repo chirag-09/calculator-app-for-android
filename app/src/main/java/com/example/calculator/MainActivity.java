@@ -174,8 +174,13 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         displayOperation.setText(savedInstanceState.getString(STATE_PENDING_OPERATION));
         pendingOperation=savedInstanceState.getString(STATE_PENDING_OPERATION);
-        operand1=Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
-        previousAnswer=Double.valueOf(savedInstanceState.getString(STATE_PREVIOUSANSWER));
+        try {
+            operand1=Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
+            previousAnswer=Double.valueOf(savedInstanceState.getString(STATE_PREVIOUSANSWER));
+        } catch (NumberFormatException e){
+            operand1=null;
+            previousAnswer=0.0;
+        }
     }
 
     @Override
