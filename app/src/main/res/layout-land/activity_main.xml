@@ -237,7 +237,7 @@
         android:layout_marginStart="8dp"
         android:minWidth="55dp"
         android:minHeight="50dp"
-        android:text="C"
+        android:text="CLR"
         android:textColor="#050505"
         android:textSize="12sp"
         app:backgroundTint="#E040FB"

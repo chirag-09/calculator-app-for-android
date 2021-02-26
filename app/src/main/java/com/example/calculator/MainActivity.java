@@ -14,52 +14,53 @@ public class MainActivity extends AppCompatActivity {
     private EditText newNumber;
     private TextView displayOperation;
 
-    private Double operand1=null;
-    private String pendingOperation="=";
-    private Double previousAnswer=0.0;
-    private final String STATE_PENDING_OPERATION="text content";
-    private final String STATE_OPERAND1="OPERAND1";
-    private final String STATE_PREVIOUSANSWER="PREV ANS";
+    private Double operand1 = null;
+    private String pendingOperation = "=";
+    private Double previousAnswer = 0.0;
+    private final String STATE_PENDING_OPERATION = "text content";
+    private final String STATE_OPERAND1 = "OPERAND1";
+    private final String STATE_PREVIOUSANSWER = "PREV ANS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        result=(EditText)findViewById(R.id.result);
-        newNumber=(EditText)findViewById(R.id.newNumber);
-        displayOperation=(TextView)findViewById(R.id.operation);
+        result = findViewById(R.id.result);
+        newNumber = findViewById(R.id.newNumber);
+        displayOperation = findViewById(R.id.operation);
 
-        Button button0=(Button)findViewById(R.id.button0);
-        Button button1=(Button)findViewById(R.id.button1);
-        Button button2=(Button)findViewById(R.id.button2);
-        Button button3=(Button)findViewById(R.id.button3);
-        Button button4=(Button)findViewById(R.id.button4);
-        Button button5=(Button)findViewById(R.id.button5);
-        Button button6=(Button)findViewById(R.id.button6);
-        Button button7=(Button)findViewById(R.id.button7);
-        Button button8=(Button)findViewById(R.id.button8);
-        Button button9=(Button)findViewById(R.id.button9);
-        Button buttonDot=(Button)findViewById(R.id.buttonDot);
-        Button buttonNeg=(Button)findViewById(R.id.buttonNeg);
-        Button buttonC=(Button)findViewById(R.id.buttonC);
-        Button buttonAns=(Button)findViewById(R.id.buttonAns);
-        Button buttonDel=(Button)findViewById(R.id.buttonDel);
+        Button button0 = findViewById(R.id.button0);
+        Button button1 = findViewById(R.id.button1);
+        Button button2 = findViewById(R.id.button2);
+        Button button4 = findViewById(R.id.button4);
+        Button button3 = findViewById(R.id.button3);
+        Button button5 = findViewById(R.id.button5);
+        Button button6 = findViewById(R.id.button6);
+        Button button7 = findViewById(R.id.button7);
+        Button button8 = findViewById(R.id.button8);
+        Button button9 = findViewById(R.id.button9);
+        Button buttonDot = findViewById(R.id.buttonDot);
+        Button buttonNeg = findViewById(R.id.buttonNeg);
+        Button buttonC = findViewById(R.id.buttonC);
+        Button buttonAns = findViewById(R.id.buttonAns);
+        Button buttonDel = findViewById(R.id.buttonDel);
 
-        Button buttonEquals=(Button)findViewById(R.id.buttonEquals);
-        Button buttonDivide=(Button)findViewById(R.id.buttonDivide);
-        Button buttonMultiply=(Button)findViewById(R.id.buttonMultiply);
-        Button buttonMinus=(Button)findViewById(R.id.buttonMinus);
-        Button buttonPlus=(Button)findViewById(R.id.buttonAdd);
+        Button buttonEquals = findViewById(R.id.buttonEquals);
+        Button buttonDivide = findViewById(R.id.buttonDivide);
+        Button buttonMultiply = findViewById(R.id.buttonMultiply);
+        Button buttonMinus = findViewById(R.id.buttonMinus);
+        Button buttonPlus = findViewById(R.id.buttonAdd);
 
-        View.OnClickListener listener=new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button b=(Button)v;
-                if(b.getText().toString().equals("ANS")){
-                    newNumber.append(previousAnswer.toString());
-                }
-                else
+                Button b = (Button) v;
+                if (b.getText().toString().equals("ANS")) {
+                    if (newNumber.getText().toString().equals("")) {
+                        newNumber.append(previousAnswer.toString());
+                    }
+                } else
                     newNumber.append(b.getText().toString());
             }
         };
@@ -76,19 +77,19 @@ public class MainActivity extends AppCompatActivity {
         buttonDot.setOnClickListener(listener);
         buttonAns.setOnClickListener(listener);
 
-        View.OnClickListener opListener=new View.OnClickListener() {
+        View.OnClickListener opListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button b=(Button) v;
-                String op=b.getText().toString();
-                String value=newNumber.getText().toString();
+                Button b = (Button) v;
+                String op = b.getText().toString();
+                String value = newNumber.getText().toString();
                 try {
-                    Double doubleValue=Double.valueOf(value);
-                    performOperation(doubleValue,op);
-                } catch (NumberFormatException e){
+                    Double doubleValue = Double.valueOf(value);
+                    performOperation(doubleValue, op);
+                } catch (NumberFormatException e) {
                     newNumber.setText("");
                 }
-                pendingOperation=op;
+                pendingOperation = op;
                 displayOperation.setText(pendingOperation);
             }
         };
@@ -101,16 +102,15 @@ public class MainActivity extends AppCompatActivity {
         buttonNeg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String value=newNumber.getText().toString();
-                if(value.length()==0){
+                String value = newNumber.getText().toString();
+                if (value.length() == 0) {
                     newNumber.setText("-");
-                }
-                else{
+                } else {
                     try {
-                        Double doubleValue=Double.valueOf(value);
-                        doubleValue*=-1;
+                        Double doubleValue = Double.valueOf(value);
+                        doubleValue *= -1;
                         newNumber.setText(doubleValue.toString());
-                    }catch(NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         //number was - or . previously
                         newNumber.setText("");
                     }
@@ -123,23 +123,23 @@ public class MainActivity extends AppCompatActivity {
                 result.setText("");
                 displayOperation.setText("");
                 newNumber.setText("");
-                operand1=null;
+                operand1 = null;
             }
         });
         buttonDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(newNumber.getText().toString().length()>0){
-                    newNumber.setText(newNumber.getText().toString().substring(0,newNumber.getText().toString().length()-1));
+                if (newNumber.getText().toString().length() > 0) {
+                    newNumber.setText(newNumber.getText().toString().substring(0, newNumber.getText().toString().length() - 1));
                 }
             }
         });
     }
-    private void performOperation(Double value,String operation){
-        if(null==operand1) {
+
+    private void performOperation(Double value, String operation) {
+        if (null == operand1) {
             operand1 = value;
-        }
-        else {
+        } else {
             if (pendingOperation.equals("="))
                 pendingOperation = operation;
             switch (pendingOperation) {
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
-        previousAnswer=operand1;
+        previousAnswer = operand1;
         result.setText(operand1.toString());
         newNumber.setText("");
     }
@@ -173,21 +173,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         displayOperation.setText(savedInstanceState.getString(STATE_PENDING_OPERATION));
-        pendingOperation=savedInstanceState.getString(STATE_PENDING_OPERATION);
+        pendingOperation = savedInstanceState.getString(STATE_PENDING_OPERATION);
         try {
-            operand1=Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
-            previousAnswer=Double.valueOf(savedInstanceState.getString(STATE_PREVIOUSANSWER));
-        } catch (NumberFormatException e){
-            operand1=null;
-            previousAnswer=0.0;
+            operand1 = Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
+            previousAnswer = Double.valueOf(savedInstanceState.getString(STATE_PREVIOUSANSWER));
+        } catch (NumberFormatException e) {
+            operand1 = null;
+            previousAnswer = 0.0;
         }
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(STATE_PENDING_OPERATION,displayOperation.getText().toString());
-        outState.putString(STATE_OPERAND1,result.getText().toString());
-        outState.putString(STATE_PREVIOUSANSWER,previousAnswer.toString());
+        outState.putString(STATE_PENDING_OPERATION, displayOperation.getText().toString());
+        outState.putString(STATE_OPERAND1, result.getText().toString());
+        outState.putString(STATE_PREVIOUSANSWER, previousAnswer.toString());
         super.onSaveInstanceState(outState);
     }
 }
